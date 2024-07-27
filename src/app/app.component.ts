@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { Operation } from './Operation'; // Adjust the path as necessary
 
 
 @Component({
@@ -12,6 +13,8 @@ import { FormsModule } from '@angular/forms';
 })
 export class AppComponent {
 
+
+
   leftHandVar: number = 0;
   rightHandVar: number = 0;
   enteredResult: string = "";
@@ -21,23 +24,21 @@ export class AppComponent {
   accumulatedScore: number = 0;
   timeLeft: number = 30;
   interval: any;
-  operation: string = "?"
+  operation: Operation = Operation.UNKNOWN;
 
   newAdditionGame() {
     this.resetGame();
-    this.operation = "+";
-    this.resetInterval();
-    this.newGame();
+    this.operation = Operation.ADDITION;
+    this.startGame();
   }
 
   newMultiGame() {
     this.resetGame();
-    this.operation = "X";
-    this.resetInterval();
-    this.newGame();
+    this.operation = Operation.MULTIPLICATION;
+    this.startGame();
   }
 
-  newGame() {
+  startGame() {
     this.newQuestion();
   }
 
@@ -54,12 +55,12 @@ export class AppComponent {
     this.leftHandVar = 0;
     this.rightHandVar = 0;
     this.enteredResult = "";
-    this.operation = "?";
+    this.operation = Operation.UNKNOWN;
+    this.resetInterval();
   }
 
   submitAnswer() {
-    console.log(this.enteredResult);
-    if (this.operation === "?") {
+    if (this.operation === Operation.UNKNOWN) {
       return;
     }
 
@@ -81,12 +82,13 @@ export class AppComponent {
   }
 
   checkResult() {
-    if (this.operation === "+") {
+    if (this.operation === Operation.ADDITION) {
       return this.leftHandVar + this.rightHandVar == parseInt(this.enteredResult);
     } else {
       return this.leftHandVar * this.rightHandVar == parseInt(this.enteredResult);
     }
   }
+
   summarizeGame() {
     let compliment: string = "";
     if (this.accumulatedScore === 50) { compliment = "מושלם!" }
@@ -101,7 +103,7 @@ export class AppComponent {
   }
 
 
-  private randomIntFromInterval() { // min and max included 
+  private randomIntFromInterval() {
     return Math.floor(Math.random() * 10) + 1;
   }
 
@@ -115,7 +117,7 @@ export class AppComponent {
         this.resetInterval();
         this.submitAnswer();
       }
-    }, 1000);  // 1000 ms = 1 second
+    }, 1000);
   }
 
   private resetInterval() {
