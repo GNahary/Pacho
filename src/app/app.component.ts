@@ -128,4 +128,16 @@ export class AppComponent {
 
   }
 
+
+  enterResultDigit(digit: string) {
+    this.enteredResult += digit;
+  }
+
+  deleteDigit() {
+    if (this.enteredResult) {
+      this.enteredResult = this.enteredResult.slice(0, -1);
+    }
+  }
+
+
 }

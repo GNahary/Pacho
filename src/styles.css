@@ -1,1 +1,63 @@
-/* You can add global styles to this file, and also import other style files */
+.vert-container {
+    display: flex;
+    flex-direction: column;
+    top: auto;
+    padding-right: 20px;
+    margin: 0;
+    align-items: center;
+}
+
+.center {
+    position: absolute;
+    right: 40%;
+}
+
+.right {
+    position: absolute;
+    right: 0;
+    align-items: end;
+}
+
+
+.hor-container {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+}
+
+.operation-button {
+    margin: 10px auto;
+    font-size: 16px;
+    border-radius: 30px;
+    height: 50px;
+    width: 150px;
+    background-color: rgb(155, 97, 22);
+    color: rgb(183, 236, 36);
+}
+
+h3,
+h5 {
+    margin: 0;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+.submit {
+    font-size: 16px;
+    border-radius: 30px;
+    height: 50px;
+    width: 150px;
+    margin: 20px;
+    background-color: rgb(16, 145, 16);
+}
+
+body {
+    background-color: rgb(206, 182, 230);
+}
+
+.digit-button {
+    height: 50px;
+    width: 50px;
+    margin-top: 10px;
+
+}
