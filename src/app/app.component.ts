@@ -1,13 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common'; // Import CommonModule
 import { RouterOutlet } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { Operation } from './Operation'; // Adjust the path as necessary
+import { Operation } from './Operation';
+import { GameSummaryComponent } from "./game-summary/game-summary.component"; // Adjust the path as necessary
 
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, FormsModule],
+  imports: [RouterOutlet, FormsModule, GameSummaryComponent, CommonModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
@@ -25,6 +27,9 @@ export class AppComponent {
   timeLeft: number = 30;
   interval: any;
   operation: Operation = Operation.UNKNOWN;
+
+  popupMessage: string = "";
+  popupCompliment: string = "";
 
   newAdditionGame() {
     this.resetGame();
@@ -60,7 +65,7 @@ export class AppComponent {
   }
 
   submitAnswer() {
-    if (this.operation === Operation.UNKNOWN) {
+    if (this.operation === Operation.UNKNOWN || this.showPopup) {
       return;
     }
 
@@ -98,8 +103,9 @@ export class AppComponent {
     else if (this.accumulatedScore > 10) { compliment = "ניסיון יפה!" }
     else if (this.accumulatedScore > 5) { compliment = "צריך להתאמן עוד!" }
     else { compliment = "אוי ואבוי!" }
-    alert(`ענית נכון על ${this.numOfCorrectAnswers} מתוך ${this.numOfQuestionsAsked} והשגת ציון של ${this.accumulatedScore} \n ${compliment}`);
-    this.resetGame();
+    this.popupMessage = (`ענית נכון על ${this.numOfCorrectAnswers} מתוך ${this.numOfQuestionsAsked} והשגת ציון של ${this.accumulatedScore}`);
+    this.popupCompliment = compliment;
+    this.openPopup();
   }
 
 
@@ -137,6 +143,18 @@ export class AppComponent {
     if (this.enteredResult) {
       this.enteredResult = this.enteredResult.slice(0, -1);
     }
+  }
+
+
+  showPopup = false;
+
+  openPopup() {
+    this.showPopup = true;
+  }
+
+  closePopup() {
+    this.showPopup = false;
+    this.resetGame();
   }
 
 

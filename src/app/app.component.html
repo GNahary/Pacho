@@ -35,4 +35,9 @@
   </div>
 </div>
 
+
+
+<app-game-summary [score]="accumulatedScore" [numOfCorrectAnswers]="numOfCorrectAnswers"
+  [numOfQuestionsAsked]="numOfQuestionsAsked" *ngIf="showPopup" (close)="closePopup()"></app-game-summary>
+
 <router-outlet />
