@@ -1,43 +1,54 @@
-<div class="hor-container">
-  <div class="vert-container">
-    <button class="operation-button" (click)="newAdditionGame()">משחק חיבור חדש</button>
-    <button class="operation-button" (click)="newMultiGame()">משחק כפל חדש</button>
+<div class="container">
+  <div class="row">
+    <button class="new-game-button" (click)="newAdditionGame()">משחק חיבור חדש</button>
+    <button class="new-game-button" (click)="newMultiGame()">משחק כפל חדש</button>
+  </div>
+  <div class="row">
+    <h3 class="game-status">זמן נותר: {{timeLeft}} </h3>
+    <h3 class="game-status">הניקוד שהשגת עד עכשיו: {{accumulatedScore}}</h3>
+    <h3 class="game-status">ענית נכון על {{numOfCorrectAnswers}} מתוך {{numOfQuestionsAsked}} שאלות</h3>
   </div>
 
-  <div class="vert-container center">
-    <h1>{{leftHandVar}} {{operation}} {{rightHandVar}}</h1>
-    <input [(ngModel)]="enteredResult" name="enteredResult" (keyup.enter)="submitAnswer()" placeholder="?">
+  <div class="row input-row">
+    <h1 class="question">{{leftHandVar}} {{operation}} {{rightHandVar}} = </h1>
+    <input class="answer" [(ngModel)]="enteredResult" name="enteredResult" (keyup.enter)="submitAnswer()">
+  </div>
 
-    <div>
-      <button class="digit-button" (click)="enterResultDigit('1')">1</button>
-      <button class="digit-button" (click)="enterResultDigit('2')">2</button>
-      <button class="digit-button" (click)="enterResultDigit('3')">3</button>
-      <button class="digit-button" (click)="enterResultDigit('4')">4</button>
-      <button class="digit-button" (click)="enterResultDigit('5')">5</button>
-      <button class="digit-button" (click)="enterResultDigit('6')">6</button>
-      <button class="digit-button" (click)="enterResultDigit('7')">7</button>
-      <button class="digit-button" (click)="enterResultDigit('8')">8</button>
-      <button class="digit-button" (click)="enterResultDigit('9')">9</button>
-      <button class="digit-button" (click)="enterResultDigit('0')">0</button>
-      <button class="digit-button" (click)="deleteDigit()">מחק</button>
+  <div class="row">
+    <div class="container">
+      <div class="digits-row">
+        <button class="digit-button" (click)="enterResultDigit('1')">1</button>
+        <button class="digit-button" (click)="enterResultDigit('2')">2</button>
+        <button class="digit-button" (click)="enterResultDigit('3')">3</button>
+      </div>
 
+      <div class="digits-row">
+        <button class="digit-button" (click)="enterResultDigit('4')">4</button>
+        <button class="digit-button" (click)="enterResultDigit('5')">5</button>
+        <button class="digit-button" (click)="enterResultDigit('6')">6</button>
+      </div>
+
+      <div class="digits-row">
+        <button class="digit-button" (click)="enterResultDigit('7')">7</button>
+        <button class="digit-button" (click)="enterResultDigit('8')">8</button>
+        <button class="digit-button" (click)="enterResultDigit('9')">9</button>
+      </div>
+
+      <div class="digits-row">
+        <button class="digit-button" (click)="enterResultDigit('0')">0</button>
+      </div>
     </div>
 
-    <button class="submit" (click)="submitAnswer()">הגש</button>
-    <h3>זמן נותר: {{timeLeft}} </h3>
-    <h3>ניקוד אפשרי: {{possibleScore}}</h3>
-  </div>
+    <div class="container">
+      <button class="action-button submit-button" (click)="submitAnswer()">הגש</button>
+      <button class="action-button delete-button" (click)="deleteDigit()">מחק</button>
+    </div>
 
-  <div class="vert-container right">
-
-    <h3>ענית נכון על {{numOfCorrectAnswers}} מתוך {{numOfQuestionsAsked}} שאלות</h3>
-    <h3>הניקוד שהשגת עד עכשיו: {{accumulatedScore}}</h3>
   </div>
 </div>
 
-
-
 <app-game-summary [score]="accumulatedScore" [numOfCorrectAnswers]="numOfCorrectAnswers"
   [numOfQuestionsAsked]="numOfQuestionsAsked" *ngIf="showPopup" (close)="closePopup()"></app-game-summary>
+
 
 <router-outlet />

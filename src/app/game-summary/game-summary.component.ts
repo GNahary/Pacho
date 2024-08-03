@@ -16,6 +16,7 @@ export class GameSummaryComponent implements OnInit {
   imageSrc: string = "";
   message: string = "";
   compliment: string = "";
+  resultScored: Score = Score.AMAZING;
 
 
   perfectScoreImgSrc: string = "https://cdn1.iconfinder.com/data/icons/sport-fitness-vol-2/512/z5-champion-award-cup-winner-1024.png";
@@ -32,13 +33,13 @@ export class GameSummaryComponent implements OnInit {
 
 
   summarizeGame() {
-    if (this.score === 50) { this.compliment = "!מושלם"; this.imageSrc = this.perfectScoreImgSrc; }
-    else if (this.score > 40) { this.compliment = "!מדהים"; this.imageSrc = this.amazingScoreImgSrc; }
-    else if (this.score > 30) { this.compliment = "!נהדר"; this.imageSrc = this.greatScoreImgSrc; }
-    else if (this.score > 20) { this.compliment = "!לא רע"; this.imageSrc = this.goodScoreImgSrc; }
-    else if (this.score > 10) { this.compliment = "!ניסיון יפה"; this.imageSrc = this.niceTryScoreImgSrc; }
-    else if (this.score > 5) { this.compliment = "!צריך להתאמן עוד"; this.imageSrc = this.practiceMoreScoreImgSrc; }
-    else { this.compliment = "!אוי ואבוי"; this.imageSrc = this.shitScoreImgSrc; }
+    if (this.score === 50) { this.compliment = "!מושלם"; this.imageSrc = this.perfectScoreImgSrc; this.playSound(Score.BEST); }
+    else if (this.score > 40) { this.compliment = "!מדהים"; this.imageSrc = this.amazingScoreImgSrc; this.playSound(Score.AMAZING); }
+    else if (this.score > 30) { this.compliment = "!נהדר"; this.imageSrc = this.greatScoreImgSrc; this.playSound(Score.GREAT); }
+    else if (this.score > 20) { this.compliment = "!לא רע"; this.imageSrc = this.goodScoreImgSrc; this.playSound(Score.NOT_BAD); }
+    else if (this.score > 10) { this.compliment = "!ניסיון יפה"; this.imageSrc = this.niceTryScoreImgSrc; this.playSound(Score.NICE_TRY); }
+    else if (this.score > 5) { this.compliment = "!צריך להתאמן עוד"; this.imageSrc = this.practiceMoreScoreImgSrc; this.playSound(Score.NEED_PRACTICE); }
+    else { this.compliment = "!אוי ואבוי"; this.imageSrc = this.shitScoreImgSrc; this.playSound(Score.OH_BOY); }
     this.message = (`ענית נכון על ${this.numOfCorrectAnswers} מתוך ${this.numOfQuestionsAsked} והשגת ציון של ${this.score}`);
   }
 
@@ -48,4 +49,22 @@ export class GameSummaryComponent implements OnInit {
     this.close.emit();
   }
 
+  playSound(howWell: Score) {
+    let audio = new Audio();
+
+    switch (howWell) {
+      case Score.BEST: { audio.src = "assets/crowd-cheer.mp3"; break; }
+      case Score.AMAZING: { audio.src = "assets/winning.mp3"; break; }
+      case Score.GREAT: { audio.src = "assets/goodresult.mp3"; break; }
+      case Score.NOT_BAD: { audio.src = "assets/solo-clap.mp3"; break; }
+      case Score.NICE_TRY: { audio.src = "assets/horrible-female-cough.mp3"; break; }
+      case Score.NEED_PRACTICE: { audio.src = "assets/failure-drum.mp3"; break; }
+      case Score.OH_BOY: { audio.src = "assets/fart.mp3"; break; }
+    }
+
+    audio.load();
+    audio.play();
+  }
 }
+
+enum Score { BEST, AMAZING, GREAT, NOT_BAD, NICE_TRY, NEED_PRACTICE, OH_BOY };
