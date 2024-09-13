@@ -1,5 +1,25 @@
 # Pacho
 
+## General
+This game was created to help my son practice his math skills. There are two modes in the game, one to practice addition and one to practice multiply. The player is then presented with 5 exercises and 30s to solve each. Score starts at 10 points for each exercise, with 1 point deducted every 3s. Once all 5 questions have been answered (or time have elpased), the final score will appear (along with some audio effects).
+
+The game itself was uploaded to AWS S3, using the following procedure:
+1. Build the project using "ng build --prod"
+2. Create an AWS S3 Bucket to deploy your angular application. Make sure to configure the bucket properties as "Use this bucket to host a website."
+3. Set bucket permissions as follows: 
+{   "Version": "2012-10-17",
+    "Statement": [
+      {"Sid": "PublicReadGetObject",
+       "Effect": "Allow",
+       "Principal": "*",
+       "Action": "s3:GetObject",
+       "Resource": "arn:aws:s3:::YOUR_BUCKET_NAME/*"}
+    ]
+}
+4. Upload all files under the dist/browser folder in your project to the bucket.
+5. Use the "Bucket website endpoint" (under Properties tab) to access your site.
+
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.6.
 
 ## Development server
